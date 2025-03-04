@@ -97,7 +97,8 @@ static int psxSendRecv(int send) {
 
 static void psxDone() {
 	DELAY();
-	GPIO_REG_WRITE(GPIO_OUT_W1TS_REG, (1<<PSX_ATT));
+	//GPIO_REG_WRITE(GPIO_OUT_W1TS_REG, (1<<PSX_ATT));
+	gpio_set_level(PSX_ATT, 1);
 }
 
 int psxReadInput() {

@@ -37,9 +37,9 @@
 #include <stdint.h>
 #include "driver/i2s.h"
 #include "sdkconfig.h"
-#include <spi_lcd.h>
+#include "spi_lcd.h"
 
-#include <psxcontroller.h>
+#include "psxcontroller.h"
 
 #define  DEFAULT_SAMPLERATE   22100
 #define  DEFAULT_FRAGSIZE     128

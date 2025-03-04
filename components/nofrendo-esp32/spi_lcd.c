@@ -128,7 +128,7 @@ void lcd_init(spi_device_handle_t spi)
     int cmd=0;
     const lcd_init_cmd_t* lcd_init_cmds;
     gpio_set_direction(PIN_NUM_RST, GPIO_MODE_INPUT);
-    vTaskDelay(1 / portTICK_RATE_MS);
+    vTaskDelay(1 / portTICK_PERIOD_MS);
     bool lcd_version = gpio_get_level(PIN_NUM_RST);
 
     //Initialize non-SPI GPIOs
@@ -140,9 +140,9 @@ void lcd_init(spi_device_handle_t spi)
 
     //Reset the display
     gpio_set_level(PIN_NUM_RST, 0);
-    vTaskDelay(100 / portTICK_RATE_MS);
+    vTaskDelay(100 / portTICK_PERIOD_MS);
     gpio_set_level(PIN_NUM_RST, 1);
-    vTaskDelay(100 / portTICK_RATE_MS);
+    vTaskDelay(100 / portTICK_PERIOD_MS);
 
     //detect LCD type
     // uint32_t lcd_id = lcd_get_id(spi);
@@ -150,7 +150,7 @@ void lcd_init(spi_device_handle_t spi)
     int lcd_detected_type = 0;
     int lcd_type;
 
-    printf("LCD ID: %08X\n", lcd_id);
+    printf("LCD ID: %08lX\n", lcd_id);
     lcd_detected_type = LCD_TYPE_ILI;
     printf("ILI9341 detected...\n");   
 
@@ -162,7 +162,7 @@ void lcd_init(spi_device_handle_t spi)
         lcd_cmd(spi, lcd_init_cmds[cmd].cmd);
         lcd_data(spi, lcd_init_cmds[cmd].data, lcd_init_cmds[cmd].databytes&0x1F);
         if (lcd_init_cmds[cmd].databytes&0x80) {
-            vTaskDelay(100 / portTICK_RATE_MS);
+            vTaskDelay(100 / portTICK_PERIOD_MS);
         }
         cmd++;
     }
@@ -220,7 +220,7 @@ void lcd_setBrightness(int duty) {
     #define LEDC_TEST_DUTY         (10)
 
     ledc_timer_config_t ledc_timer = {
-        .bit_num = LEDC_TIMER_10_BIT, // resolution of PWM duty
+        .duty_resolution = LEDC_TIMER_10_BIT, // resolution of PWM duty
         .freq_hz = 5000,              // frequency of PWM signal
         .speed_mode = LEDC_HS_MODE,   // timer mode
         .timer_num = LEDC_HS_TIMER    // timer index

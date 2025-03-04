@@ -34,6 +34,7 @@
 #include <osd.h>
 #include <gui.h>
 #include <vid_drv.h>
+#include <string.h>
 
 /* emulated system includes */
 #include <nes.h>

@@ -72,7 +72,7 @@ uint8_t i2c_keyboard_read()
     i2c_master_write_byte(cmd, (uint8_t)(I2C_KEYBOARD_ADDR << 1) | READ_BIT, ACK_CHECK_EN);
     i2c_master_read_byte(cmd, &ret, NACK_VAL);
     i2c_master_stop(cmd);
-    i2c_master_cmd_begin(I2C_KEYBOARD_NUM, cmd, 1000 / portTICK_RATE_MS);
+    i2c_master_cmd_begin(I2C_KEYBOARD_NUM, cmd, 1000 / portTICK_PERIOD_MS);
     i2c_cmd_link_delete(cmd);
     return ret;
 }
